@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J17CssControl.html</title>
+    <script>
+        // 전역변수 : 기사부분의 폰트 사이즈를 저장
+        var pTag, pSize;
+
+        window.onload = function(){
+            pTag = document.getElementById("article");
+            // 폰트사이즈 변경을 위해 숫자로 변경한다.
+            pSize = parseInt(pTag.style.fontSize);
+        }
+    
+        function fnArticle(flag){
+            /* 
+            JS에서 CSS속성 컨트롤
+                : DOM.style.CSS속성 = "속성값";
+                단, 이때 CSS 속성에 하이픈이 들어간다면, 제거 후 첫 글자를 대문자로 변경한다.
+                또한, 크기를 부여할때는 반드시 px과 같은 단위를 기술해야한다.
+            */
+            switch(flag){
+                case "+":
+                    pSize += 10;
+                    pTag.style.fontSize = pSize+"px";
+                    break;
+                case "-":
+                    pSize -= 10;
+                    pTag.style.fontSize = pSize+"px";
+                    break;
+                case "R":
+                    pTag.style.color = "red";
+                    break;
+                case "G":
+                    pTag.style.color = "green";
+                    break;
+                case "B":
+                    pTag.style.color = "blue";
+                    break;
+                case "Bo":
+                    pTag.style.fontWeight = "bold";
+                    break;
+                case "No":
+                    pTag.style.fontWeight = "normal";
+                    break;
+                case "Ce":
+                    pTag.style.textAlign = "center";
+                    break;
+                case "Le":
+                    pTag.style.textAlign = "left";
+                    break;
+                default:
+                    pTag.style.color = "black";
+            }
+        }
+        /*
+            문제] 글꼴바꾸기 버튼을 계속 누를때마다 아래 5가지
+            폰트가 토글되어 적용될수 있도록 함수를 정의하시오.
+            글꼴 : Verdana, 굴림체, 휴먼옛체, 궁서, Impact
+        */
+        var fontToggle = 0; //폰트 토글을 위한 전역변수
+
+        function setFont(){
+            // 문제에서 주어진 폰트를 배열로 선언
+            var fontArray = ['Verdana', '굴림체', '휴먼옛체', '궁서', 'Impact'];
+            // 정수를 5로 나누면 나머지는 0~4까지 생성됨
+            var fontIndex = fontToggle % 5;
+            // 위에서 구한 수를 인덱스로 사용하여 폰트를 설정
+            pTag.style.fontFamily = fontArray[fontIndex];
+            // 함수를 호출할 때 마다 전역변수 증가
+            fontToggle ++;
+	    }
+    </script>
+</head>
+<body>
+    <h2>자바스크립트로 CSS제어하기</h2>
+    <input type="button" value="글꼴바꾸기" onclick="setFont();"/>
+    <fieldset>
+        <legend>신문기사</legend>
+        <button onclick="fnArticle('+');">+</button>
+        <button onclick="fnArticle('-');">-</button>
+        <button onclick="fnArticle('R');">Red</button>
+        <button onclick="fnArticle('G');">Green</button>
+        <button onclick="fnArticle('B');">Blue</button>
+        <button onclick="fnArticle('');">Black</button>
+        <button onclick="fnArticle('Bo');">볼드체</button>
+        <button onclick="fnArticle('No');">보통체</button>
+        <button onclick="fnArticle('Ce');">가운데정렬</button>
+        <button onclick="fnArticle('Le');">좌측정렬</button>
+    </fieldset>
+    <p style="font-size:12px;" id="article">
+        오늘의 뉴스<br/>
+        가나다라마바사<br>
+        아자차카타파하<br>
+        123456789 <br>
+        ABCDEFGHYJKLMNOPQRSTUVWXYZ <br>
+        아야어여오요우유으이 <br>
+        도레미파솔라시도
+    </p>
+</body>
+</html>
